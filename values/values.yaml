@@ -1,0 +1,30 @@
+servingEngineSpec:
+  modelSpec:
+    - name: "llama3"
+      repository: "vllm/vllm-openai"
+      tag: "latest"
+      modelURL: "meta-llama/Llama-2-7b-hf"
+      replicaCount: 1
+
+      requestCPU: 10
+      requestMemory: "16Gi"
+      requestGPU: 1
+
+      pvcStorage: "50Gi"
+
+      vllmConfig:
+        enableChunkedPrefill: false
+        enablePrefixCaching: false
+        maxModelLen: 4096
+        dtype: "bfloat16"
+        extraArgs:
+          - "--gpu-memory-utilization"
+          - "0.8"
+
+      # Illustrative only: confirm the chart supports this field.
+      env:
+        - name: HF_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: hf-token
+              key: HF_TOKEN

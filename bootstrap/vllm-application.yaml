@@ -4,21 +4,22 @@ kind: Application
 metadata:
   name: vllm
   namespace: argocd
+
 spec:
   project: default
 
   sources:
-    # Official upstream Helm chart
+    # Official vLLM Production Stack Helm chart
     - repoURL: https://vllm-project.github.io/production-stack
-      chart: vllm
-      targetRevision: "0.1.0"
+      chart: vllm-stack
+      targetRevision: "0.1.13"
       helm:
         releaseName: vllm
         valueFiles:
           - $values/values/values.yaml
 
-    # Your Git repository containing only values
-    - repoURL: https://github.com/YOUR_ORG/vllm-gitops.git
+    # Git repository containing Helm values
+    - repoURL: https://github.com/vishalchandra181/vllm-deploy.git
       targetRevision: main
       ref: values
 

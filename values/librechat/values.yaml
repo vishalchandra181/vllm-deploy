@@ -23,6 +23,7 @@ ingress:
 
 # LibreChat configuration
 configEnv:
+  ALLOW_REGISTRATION: "true"
   existingSecretName: librechat-credentials-env
   configYamlContent: |
     version: 1.3.13

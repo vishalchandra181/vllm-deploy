@@ -15,7 +15,7 @@ spec:
       helm:
         releaseName: librechat
         valueFiles:
-          - $values/librechat/values.yaml
+          - $values/values/librechat/values.yaml
 
     # Git repository containing Helm values
     - repoURL: https://github.com/vishalchandra181/vllm-deploy.git

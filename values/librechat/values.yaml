@@ -1,0 +1,53 @@
+
+# LibreChat Helm values
+replicaCount: 1
+
+image:
+  registry: ghcr.io
+  repository: danny-avila/librechat
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 3080
+
+ingress:
+  enabled: false
+
+# LibreChat configuration
+librechat:
+  existingSecretName: librechat-credentials-env
+  configEnv:
+    HOST: "0.0.0.0"
+    PORT: "3080"
+    ALLOW_REGISTRATION: "true"
+
+# Custom OpenAI-compatible endpoint for vLLM
+config:
+  endpoints:
+    custom:
+      - name: "vLLM"
+        apiKey: "not-needed"
+        baseURL: "http://vllm-router-service.vllm.svc.cluster.local:80/v1"
+        models:
+          default:
+            - "meta-llama/Llama-3-8B-Instruct"
+          fetch: false
+        titleConvo: true
+        titleModel: "meta-llama/Llama-3-8B-Instruct"
+        modelDisplayLabel: "vLLM"
+
+# MongoDB
+mongodb:
+  enabled: true
+
+# Meilisearch
+meilisearch:
+  enabled: true
+
+# Redis
+redis:
+  enabled: false
+
+resources: {}

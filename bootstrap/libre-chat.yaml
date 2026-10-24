@@ -9,9 +9,9 @@ spec:
 
   sources:
     # LibreChat Helm chart
-    - repoURL: oci://ghcr.io/librechat-ai/librechat-chart/librechat
+    - repoURL: ghcr.io/librechat-ai/librechat-chart
       chart: librechat
-      targetRevision: "0.1.13"
+      targetRevision: "3.0.0"
       helm:
         releaseName: librechat
         valueFiles:

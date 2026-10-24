@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: librechat
+  namespace: argocd
+
+spec:
+  project: default
+
+  sources:
+    # LibreChat Helm chart
+    - repoURL: oci://ghcr.io/librechat-ai/librechat-chart/librechat
+      chart: librechat
+      targetRevision: "0.1.13"
+      helm:
+        releaseName: librechat
+        valueFiles:
+          - $values/librechat/values.yaml
+
+    # Git repository containing Helm values
+    - repoURL: https://github.com/vishalchandra181/vllm-deploy.git
+      targetRevision: main
+      ref: values
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: librechat
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
